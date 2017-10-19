@@ -105,7 +105,28 @@ class RegisterPage(MasterHandler):
         password = self.request.get('password')
         verify = self.request.get('verify')
 
-
+        if valid_username(name):
+            if valid_password(password):
+                if password == verify:
+                    user = database.User.getUserByName(name)
+                    if user:
+                        if user.user_name == name:
+                            msg = "The username already exisits."
+                            self.render('register.html', error = msg)
+                    else:
+                        password_hash = hashPassword(password, name)
+                        user_id = database.User.addUser(name, password_hash)
+                        self.set_secure_cookie('user_id', str(user_id))
+                        self.redirect('/')
+                else:
+                    msg = "The passwords do not match."
+                    self.render('register.html', error = msg)
+            else:
+                msg = "That wasn't a valid password."
+                self.render('register.html', error = msg)
+        else:
+            msg = "That's not a valid username."
+            self.render('register.html', error = msg)
 
 
 
