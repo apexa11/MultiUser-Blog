@@ -82,6 +82,19 @@ class LoginPage(MasterHandler):
     def get(self):
         self.render('login.html')
 
+    def post(self):
+        name = self.request.get('username')
+        password = self.request.get('password')
+        password_hash = hashPassword(password, name)
+        user = database.User.getUserByNameAndPassword(
+            name, password_hash)
+        if user:
+            self.set_secure_cookie('user_id', str(
+                               database.User.getUserId(user)))
+            self.redirect('/')
+        else:
+            msg = 'Invalid login'
+            self.render('login.html', error = msg)
 
 
 
@@ -91,4 +104,3 @@ class LoginPage(MasterHandler):
 
 
 
-        
