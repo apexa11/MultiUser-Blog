@@ -133,6 +133,19 @@ class LogoutPage(MasterHandler):
         self.logout()
         self.redirect('/')
 
+class PostPage(MasterHandler):
+    def get(self, post_id):
+        post = database.Post.getPost(int(post_id))
+        if not post:
+            return self.error()
+        comments = database.Comment.getCommentsByPostId(post_id)
+        like_text = 'Like'
+        if self.user:
+            user = self.user
+            like = database.LikePost.getLikeByPostAndAuthor(post_id, user.user_name)
+            if like:
+                like_text = 'Liked'
+        self.render("viewpost.html", post = post, comments = comments, like = like_text)
 
 
 
@@ -149,5 +162,4 @@ class LogoutPage(MasterHandler):
 
 
 
-        
 
