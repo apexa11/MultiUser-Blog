@@ -70,7 +70,9 @@ class MasterHandler(webapp2.RequestHandler):
         uid = self.read_secure_cookie('user_id')
         self.user = uid and database.User.getUserById(uid)
 
-
+class MainPage(MasterHandler):
+    def get(self):
+        posts = database.Post.query()
 
 
 
