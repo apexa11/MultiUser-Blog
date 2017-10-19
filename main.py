@@ -306,6 +306,22 @@ class DeleteLike(MasterHandler):
             self.error(401)
             return
 
+app = webapp2.WSGIApplication([
+    ('/', MainPage),
+    ('/account', AccountPage),
+    ('/login', LoginPage),
+    ('/register', RegisterPage),
+    ('/logout', LogoutPage),
+    ('/newpost', AddPostPage),
+    ('/editpost/([0-9]+)', EditPostPage),
+    ('/post/([0-9]+)', PostPage),
+    ('/delete', DeletePost),
+    ('/addcomment', AddComment),
+    ('/editcomment', EditComment),
+    ('/deletecomment', DeleteComment),
+    ('/addlike/([0-9]+)', AddLike),
+    ('/deletelike', DeleteLike),
+], debug=True)
 
 
 
