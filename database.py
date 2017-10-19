@@ -7,7 +7,7 @@ class Post(ndb.Model):
     post_created = ndb.DateTimeProperty(auto_now_add = True)
     post_last_updated = ndb.DateTimeProperty(auto_now = True)
 
-     @classmethod
+    @classmethod
     def addPost(cls, title, content, author):
         p = Post(post_title = title, post_content = content,
                  post_author = author)
@@ -103,7 +103,7 @@ class LikePost(ndb.Model):
             return True
         else:
             return False
-            
+
 class Comment(ndb.Model):
     comment_post = ndb.StringProperty(required = True)
     comment_text = ndb.StringProperty(required = True)
