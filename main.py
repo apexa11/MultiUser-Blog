@@ -239,7 +239,25 @@ class EditComment(MasterHandler):
         else:
             return self.error()
 
+class DeleteComment(MasterHandler):
+    def get(self):
+        self.redirect('/')
+    
+    def post(self):
+        if not self.user:
+            return self.redirect('/')
 
+        user = self.user
+        comment_id = self.request.get('comment_id')
+        comment = database.Comment.getComment(comment_id)
+
+        if comment.comment_author == user.user_name:
+            success = database.Comment.deleteComment(int(comment_id))
+            if success:
+                return self.redirect('/')
+        else:
+            self.error(401)
+            return 
 
 
 
