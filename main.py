@@ -167,6 +167,28 @@ class AddPostPage(MasterHandler):
                                         author = author)
         self.redirect('/post/' + str(post_id))
 
+class EditPostPage(MasterHandler):
+    def get(self, post_id):
+        post = database.Post.getPost(int(post_id))
+        if not post:
+            self.error()
+            return
+        self.render("addpost.html", post = post)
+
+    def post(self, post_id):
+        if not self.user:
+            return self.redirect('/')
+
+        user = self.user
+        title = self.request.get('title')
+        content = self.request.get('content')
+        #post_id = self.request.get('post_id')
+        author = user.user_name
+        database.Post.editPost(title = title,
+                               content = content,
+                               author = author,
+                               post_id = post_id)
+        self.redirect('/post/' + str(post_id))
 
 
 
