@@ -96,7 +96,9 @@ class LoginPage(MasterHandler):
             msg = 'Invalid login'
             self.render('login.html', error = msg)
 
-
+class RegisterPage(MasterHandler):
+    def get(self):
+        self.render('register.html')
 
 
 
