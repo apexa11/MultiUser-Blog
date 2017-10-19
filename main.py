@@ -74,6 +74,9 @@ class MainPage(MasterHandler):
     def get(self):
         posts = database.Post.query()
 
+class AccountPage(MasterHandler):
+    def get(self):
+        self.render('account.html')
 
 
 
