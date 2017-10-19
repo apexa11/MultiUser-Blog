@@ -65,5 +65,23 @@ class MasterHandler(webapp2.RequestHandler):
     def error(self):
         self.render('error.html')
 
+    def initialize(self, *a, **kw):
+        webapp2.RequestHandler.initialize(self, *a, **kw)
+        uid = self.read_secure_cookie('user_id')
+        self.user = uid and database.User.getUserById(uid)
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
