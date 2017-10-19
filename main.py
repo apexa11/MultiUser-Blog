@@ -128,5 +128,26 @@ class RegisterPage(MasterHandler):
             msg = "That's not a valid username."
             self.render('register.html', error = msg)
 
+class LogoutPage(MasterHandler):
+    def get(self):
+        self.logout()
+        self.redirect('/')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
