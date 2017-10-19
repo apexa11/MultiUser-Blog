@@ -259,7 +259,31 @@ class DeleteComment(MasterHandler):
             self.error(401)
             return 
 
+class AddLike(MasterHandler):
+    def get(self, post_id):
+        if not self.user:
+            return self.redirect('/')
 
+        user = self.user
+        post = database.Post.getPost(post_id)
+        if not post:
+            return self.redirect('/')
+        like = database.LikePost.getLikeByPostAndAuthor(post_id, user.user_name)
+        if like:
+            database.LikePost.deleteLike(like.key.id())
+        else:
+            if post.post_author == user.user_name:
+                return self.redirect('/')
+            else:
+                database.LikePost.addLike(post_id, user.user_name)
+
+        return self.redirect('/post/'+post_id)
+
+        if post_id and content:
+            database.Comment.addComment(post_id = post_id, text = content, author = user.user_name)
+            return self.redirect('/post/'+post_id)
+        else:
+            return self.error() 
 
 
 
