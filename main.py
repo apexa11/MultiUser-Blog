@@ -147,7 +147,25 @@ class PostPage(MasterHandler):
                 like_text = 'Liked'
         self.render("viewpost.html", post = post, comments = comments, like = like_text)
 
+class AddPostPage(MasterHandler):
+    def get(self):
+        if self.user:
+            self.render("addpost.html")
+        else:
+            self.redirect("/login")
 
+    def post(self):
+        if not self.user:
+            return self.redirect('/')
+
+        user = self.user
+        title = self.request.get('title')
+        content = self.request.get('content')
+        author = user.user_name
+        post_id = database.Post.addPost(title = title,
+                                        content = content,
+                                        author = author)
+        self.redirect('/post/' + str(post_id))
 
 
 
