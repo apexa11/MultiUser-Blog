@@ -78,7 +78,9 @@ class AccountPage(MasterHandler):
     def get(self):
         self.render('account.html')
 
-
+class LoginPage(MasterHandler):
+    def get(self):
+        self.render('login.html')
 
 
 
