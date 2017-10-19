@@ -100,7 +100,10 @@ class RegisterPage(MasterHandler):
     def get(self):
         self.render('register.html')
 
-
+    def post(self):
+        name = self.request.get('username')
+        password = self.request.get('password')
+        verify = self.request.get('verify')
 
 
 
