@@ -285,6 +285,26 @@ class AddLike(MasterHandler):
         else:
             return self.error() 
 
+class DeleteLike(MasterHandler):
+    def get(self):
+        self.redirect('/')
+    
+    def post(self):
+        if not self.user:
+            return self.redirect('/')
+
+        user = self.user
+        post_id = self.request.get('postid')
+        post = database.Post.getPost(post_id)
+
+        if post.post_author == user.user_name:
+            success = database.Post.deletePost(int(post_id))
+            if success:
+                self.render('index.html')
+                self.redirect('/')
+        else:
+            self.error(401)
+            return
 
 
 
