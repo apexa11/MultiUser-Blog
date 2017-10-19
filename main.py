@@ -211,7 +211,19 @@ class DeletePost(MasterHandler):
             self.error(401)
             return
 
+class AddComment(MasterHandler):
+    def post(self):
+        if not self.user:
+            return self.redirect('/')
 
+        user = self.user
+        post_id = self.request.get('post_id')
+        content = self.request.get('content')
+        if post_id and content:
+            database.Comment.addComment(post_id = post_id, text = content, author = user.user_name)
+            return self.redirect('/post/'+post_id)
+        else:
+            return self.error()
 
 
 
