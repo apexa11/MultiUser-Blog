@@ -23,3 +23,25 @@ class Post(ndb.Model):
                 post.post_content = content
                 post.put()
                 return post.key.id()
+
+    @classmethod
+    def getPost(cls, post_id):
+        return Post.get_by_id(int(post_id))
+
+    @classmethod
+    def deletePost(cls, post_id):
+        post = Post.get_by_id(int(post_id))
+        if post:
+            post.key.delete()
+            return True
+        else:
+            return False
+
+
+
+
+
+
+
+
+            
